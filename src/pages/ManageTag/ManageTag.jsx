@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { getActiveDeactiveTags, getTags } from "../../Reducer/TagSlice";
 import AddTagsModal from "./AddTagsModal";
 import { ToastContainer } from "react-toastify";
+import UpdateTagModal from "./UpdateTagModal";
 
 const ManageTag = () => {
   const dispatch = useDispatch();
@@ -81,12 +82,6 @@ const ManageTag = () => {
               >
                 Update
               </button>
-
-              <button
-              // onClick={() => handleDeleteZone(params?.data?.id)}
-              >
-                <MdDelete size={20} color="red" />
-              </button>
             </div>
           );
         },
@@ -133,11 +128,13 @@ const ManageTag = () => {
             setOpenTagModal={setOpenTagModal}
           />
         )}
-           {
-            openUpdateTagModal&&(
-                
-            )
-        }
+        {openUpdateTagModal && (
+          <UpdateTagModal
+            openUpdateTagModal={openUpdateTagModal}
+            setOpenUpdateTagModal={setOpenUpdateTagModal}
+            tagId={tagId}
+          />
+        )}
       </div>
     </>
   );
