@@ -2,6 +2,7 @@ import { Button, Label, Modal, TextInput } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addZone, getZoneList } from "../../Reducer/ZoneSlice";
+import { toast } from "react-toastify";
 
 const AddZoneModal = ({ openModal, setOpenModal }) => {
   const dispatch = useDispatch();
@@ -16,6 +17,8 @@ const AddZoneModal = ({ openModal, setOpenModal }) => {
       if (res?.payload?.status_code === 201) {
         setOpenModal(false);
         dispatch(getZoneList());
+      } else if (res?.payload?.response?.data?.status_code === 400) {
+        toast.error(res?.payload?.response?.data?.message);
       }
     });
   };

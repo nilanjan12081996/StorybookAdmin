@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const UpdateZoneModal = ({ openUpdateModal, setOpenUpdateModal, zoneId }) => {
   const dispatch = useDispatch();
@@ -32,6 +33,8 @@ const UpdateZoneModal = ({ openUpdateModal, setOpenUpdateModal, zoneId }) => {
       if (res?.payload?.status_code === 200) {
         setOpenUpdateModal(false);
         dispatch(getZoneList());
+      } else if (res?.payload?.response?.data?.status_code === 400) {
+        toast.error(res?.payload?.response?.data?.message);
       }
     });
   };

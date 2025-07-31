@@ -8,6 +8,7 @@ import {
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const UpdateModal = ({ openDesModal, setOpenDesModal, desId, cateId }) => {
   const { allDes } = useSelector((state) => state?.cate);
@@ -33,6 +34,8 @@ const UpdateModal = ({ openDesModal, setOpenDesModal, desId, cateId }) => {
         if (res?.payload?.status_code === 200) {
           setOpenDesModal(false);
           dispatch(getSingleCateGory({ category_id: cateId }));
+        } else if (res?.payload?.response?.data?.status_code === 422) {
+          toast.error(res?.payload?.response?.data?.data?.[0]?.message);
         }
       }
     );
