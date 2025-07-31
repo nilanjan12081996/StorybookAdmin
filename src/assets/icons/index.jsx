@@ -25,6 +25,7 @@ import {
   AiOutlineSearch,
   AiOutlineTransaction,
   AiOutlineExclamationCircle,
+  AiOutlineCloudUpload,
 } from "react-icons/ai";
 import {
   BsChevronLeft,
@@ -78,6 +79,7 @@ import {
   MdSupervisorAccount,
   MdClass,
   MdDelete,
+  MdOutlineKeyboardBackspace,
 } from "react-icons/md";
 import {
   FaClockRotateLeft,
@@ -120,6 +122,8 @@ import { TbCheck } from "react-icons/tb";
 import { CiSearch } from "react-icons/ci";
 
 export {
+  AiOutlineCloudUpload,
+  MdOutlineKeyboardBackspace,
   FaCircleMinus,
   HiMinusCircle,
   BsFillPlusCircleFill,

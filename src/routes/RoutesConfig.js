@@ -28,6 +28,7 @@ import ManageZones from '../pages/ManageZones/ManageZones.jsx';
 import ManageCategory from '../pages/ManageCategory/ManageCategory.jsx';
 import ManageCateDes from '../pages/ManageCategoryDes/ManageCateDes.jsx';
 import ManageTag from '../pages/ManageTag/ManageTag.jsx';
+import ManageAudio from '../pages/manageAudio/manageAudio.jsx';
 
 
 const allRoutes = [
@@ -121,6 +122,17 @@ const allRoutes = [
       {
         index: true,
         element: <ManageTag />,
+      },
+    ],
+  },
+
+  {
+    path: '/manage-audio',
+    element: <InsideLayout />,
+    children: [
+      {
+        index: true,
+        element: <ManageAudio />,
       },
     ],
   },
