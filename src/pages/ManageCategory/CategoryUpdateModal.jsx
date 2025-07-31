@@ -8,6 +8,7 @@ import {
 } from "../../Reducer/CategorySlice";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const CategoryUpdateModal = ({
   openCategoryModal,
@@ -37,6 +38,8 @@ const CategoryUpdateModal = ({
         if (res?.payload?.status_code === 200) {
           setOpenCategoryModal(false);
           dispatch(getCateGory());
+        } else if (res?.payload?.response?.data?.status_code === 422) {
+          toast.error(res?.payload?.response?.data?.data?.[0]?.message);
         }
       }
     );

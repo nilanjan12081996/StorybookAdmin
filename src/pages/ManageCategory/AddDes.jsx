@@ -17,6 +17,8 @@ const AddDes = ({ openAddDesModal, setOpenAddDesModal, cateGoryId }) => {
         if (res?.payload?.status_code === 201) {
           setOpenAddDesModal(false);
           toast.success(res?.payload?.message);
+        } else if (res?.payload?.response?.data?.status_code === 400) {
+          toast.error(res?.payload?.response?.data?.message);
         }
       }
     );
