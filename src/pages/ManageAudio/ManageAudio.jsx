@@ -7,7 +7,7 @@ import {
   Textarea,
 } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { useDispatch } from "react-redux";
@@ -18,12 +18,14 @@ import {
   getVoice,
 } from "../../Reducer/AddAudioSlice";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const ManageAudio = () => {
   const { voice } = useSelector((state) => state?.audios);
   const dispatch = useDispatch();
   const [isNarrator, setIsNarrator] = useState();
   const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [inputType, setInputType] = useState("");
   const handleSelectLanguage = (event) => {
     setSelectedLanguage(event.target.value);
   };
@@ -39,13 +41,23 @@ const ManageAudio = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
     const formData = new FormData();
     if (isNarrator === "narator") {
-      formData.append("text", data?.text);
+      console.log("file", data?.FileList);
+
+      if (inputType === "text") {
+        formData.append("text", data?.text);
+      } else if (inputType === "file" && data?.file?.[0]) {
+        formData.append("file", data.file[0]);
+      } else {
+        toast.error("Please input text or upload a file.");
+      }
+      // formData.append("text", data?.text);
       formData.append("narrator_voice", data?.narrator_voice);
       formData.append("language_accent", selectedLanguage);
       formData.append("voice_speed", data?.voice_speed);
@@ -59,11 +71,19 @@ const ManageAudio = () => {
               chunks: res?.payload?.chunks,
               pdf_uuid: res?.payload?.pdf_uuid,
             })
-          );
+          ).then((res) => {
+            console.log("res", res);
+          });
         }
       });
     } else if (isNarrator === "character") {
-      formData.append("text", data?.text);
+      if (inputType === "text") {
+        formData.append("text", data?.text);
+      } else if (inputType === "file" && data?.file?.[0]) {
+        formData.append("file", data.file[0]);
+      } else {
+        toast.error("Please input text or upload a file.");
+      }
       formData.append("language_accent", selectedLanguage);
       formData.append("voice_speed", data?.voice_speed);
       formData.append("width", 1280);
@@ -75,7 +95,9 @@ const ManageAudio = () => {
               chunks: res?.payload?.chunks,
               pdf_uuid: res?.payload?.pdf_uuid,
             })
-          );
+          ).then((res) => {
+            console.log("res", res);
+          });
         }
       });
     }
@@ -107,6 +129,16 @@ const ManageAudio = () => {
                     placeholder="Leave a comment..."
                     rows={12}
                     {...register("text")}
+                    disabled={inputType === "file"}
+                    onChange={(e) => {
+                      if (e.target.value.trim() !== "") setInputType("text");
+                      else if (e.target.value.trim() === "") setInputType("");
+                    }}
+                    className={`${
+                      inputType === "file"
+                        ? "cursor-not-allowed bg-gray-100"
+                        : ""
+                    }`}
                   />
                 </div>
                 <div>
@@ -130,10 +162,55 @@ const ManageAudio = () => {
                           Supported formats: PDF, DOC, DOCX
                         </p>
                       </div>
-                      <FileInput
+                      {/* <FileInput
                         id="dropzone-file"
-                        className="hidden"
+                        accept=".pdf,.doc,.docx"
+                        className={`hidden ${
+                          inputType === "text"
+                            ? "cursor-not-allowed opacity-50 pointer-events-none"
+                            : ""
+                        }`}
                         {...register("file")}
+                        disabled={inputType === "text"}
+                        onChange={(e) => {
+                          console.log(e.target.files, "e.target.files");
+
+                          if (e.target.files.length > 0) setInputType("file");
+                          else setInputType("");
+                        }}
+                      /> */}
+                      <Controller
+                        name="file"
+                        control={control}
+                        defaultValue={null}
+                        render={({ field }) => (
+                          <FileInput
+                            id="dropzone-file"
+                            accept=".pdf,.doc,.docx"
+                            disabled={inputType === "text"}
+                            className={`hidden ${
+                              inputType === "text"
+                                ? "cursor-not-allowed opacity-50 pointer-events-none"
+                                : ""
+                            }`}
+                            onChange={(e) => {
+                              const selectedFile = e.target.files?.[0];
+                              if (selectedFile) {
+                                setInputType("file");
+
+                                // Clear the text field
+                                const textField =
+                                  document.getElementById("comment");
+                                if (textField) textField.value = "";
+
+                                field.onChange(e.target.files); // ✅ forward FileList to react-hook-form
+                              } else {
+                                setInputType("");
+                                field.onChange(null);
+                              }
+                            }}
+                          />
+                        )}
                       />
                     </Label>
                   </div>
