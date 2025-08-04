@@ -31,7 +31,8 @@ import PaymentMethodSlice from '../Reducer/PaymentMethodSlice';
 import CourseSlice from '../Reducer/CourseSlice';
 import CategorySlice from '../Reducer/CategorySlice'
 import RoleSlice from '../Reducer/RoleSlice';
-import UserSlice from '../Reducer/UserSlice'
+import UserSlice from '../Reducer/UserSlice';
+import AddAudioSlice from '../Reducer/AddAudioSlice'
 
 const store = configureStore({
   reducer: {
@@ -68,6 +69,7 @@ const store = configureStore({
     cate: CategorySlice,
     role: RoleSlice,
     user: UserSlice,
+    audios: AddAudioSlice,
   },
   devTools: import.meta.env.DEV,
 });

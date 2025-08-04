@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 const api = axios.create({ baseURL: import.meta.env.VITE_API_BASE_URL });
 let domain = window.location.origin
-const formDataURL = ['product/add-product-images', '/user/update-profile', '/admin/update-subscripiton-plans', '/operation-head/coach/add-coach', '/admin/course/add-course-step-one', '/admin/course/add-course-step-two', '/oparational-head/batch/add-batch-banner'];
+const formDataURL = ['product/add-product-images', '/user/update-profile', '/admin/update-subscripiton-plans', '/operation-head/coach/add-coach', '/admin/course/add-course-step-one', '/admin/course/add-course-step-two', '/oparational-head/batch/add-batch-banner', 'https://audiobookpython.bestworks.cloud/process_pdf_narrator', 'https://audiobookpython.bestworks.cloud/process_pdf'];
 api.interceptors.request.use((req) => {
   let userTokenData;
   try {
