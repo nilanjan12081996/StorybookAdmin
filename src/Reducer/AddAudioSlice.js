@@ -66,6 +66,7 @@ export const getVoice = createAsyncThunk(
     }
 )
 const initialState = {
+    videoGenerateLoading: false,
     loading: false,
     narateAudioData: [],
     charAudioData: [],
@@ -81,27 +82,27 @@ const AddAudioSlice = createSlice(
         extraReducers: (builder) => {
             builder
                 .addCase(createAudioForNarator.pending, (state) => {
-                    state.loading = true
+                    state.videoGenerateLoading = true
                 })
                 .addCase(createAudioForNarator.fulfilled, (state, { payload }) => {
-                    state.loading = false
+                    state.videoGenerateLoading = false
                     state.narateAudioData = payload
                     state.error = false
                 })
                 .addCase(createAudioForNarator.rejected, (state, { payload }) => {
-                    state.loading = false
+                    state.videoGenerateLoading = false
                     state.error = payload
                 })
                 .addCase(createAudioForCharater.pending, (state) => {
-                    state.loading = true
+                    state.videoGenerateLoading = true
                 })
                 .addCase(createAudioForCharater.fulfilled, (state, { payload }) => {
-                    state.loading = false
+                    state.videoGenerateLoading = false
                     state.charAudioData = payload
                     state.error = false
                 })
                 .addCase(createAudioForCharater.rejected, (state, { payload }) => {
-                    state.loading = false
+                    state.videoGenerateLoading = false
                     state.error = payload
                 })
                 .addCase(createAudioForFinal.pending, (state) => {
