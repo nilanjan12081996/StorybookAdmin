@@ -41,6 +41,7 @@
     "grapesjs-tailwind": "^1.0.7",
     "grapesjs-tooltip": "^0.1.8",
     "grapesjs-typed": "^2.0.1",
+    "hls.js": "^1.6.8",
     "html-react-parser": "^5.1.13",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.2",

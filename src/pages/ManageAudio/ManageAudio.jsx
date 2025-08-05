@@ -6,11 +6,12 @@ import {
   Select,
   Textarea,
 } from "flowbite-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { useDispatch } from "react-redux";
+import Hls from "hls.js";
 import {
   createAudioForCharater,
   createAudioForFinal,
@@ -20,11 +21,15 @@ import {
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
+import { getCateGory } from "../../Reducer/CategorySlice";
+import { getZoneList } from "../../Reducer/ZoneSlice";
 
 const ManageAudio = () => {
   const { voice, videoGenerateLoading, narateAudioData } = useSelector(
     (state) => state?.audios
   );
+  const { cateGory } = useSelector((state) => state?.cate);
+  const { allZone } = useSelector((state) => state?.zone);
   const dispatch = useDispatch();
   const [isNarrator, setIsNarrator] = useState();
   const [selectedLanguage, setSelectedLanguage] = useState("");
@@ -32,11 +37,20 @@ const ManageAudio = () => {
   const [uploadedFileName, setUploadedFileName] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isPreview, setisPreview] = useState(false);
+  const [videoUrl, setVideoUrl] = useState();
+  const playerRef = useRef(null);
+  const [uploadedImageFileName, setUploadedImageFileName] = useState("");
   const handleSelectLanguage = (event) => {
     setSelectedLanguage(event.target.value);
   };
   useEffect(() => {
     dispatch(getVoice());
+  }, []);
+  useEffect(() => {
+    dispatch(getCateGory());
+  }, []);
+  useEffect(() => {
+    dispatch(getZoneList());
   }, []);
   console.log("voice", voice);
 
@@ -48,11 +62,14 @@ const ManageAudio = () => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm();
   console.log(narateAudioData, "narateAudioData");
 
   const onSubmit = (data) => {
+    console.log(data, "data");
+
     const formData = new FormData();
     if (isNarrator === "narator") {
       console.log("file", data?.FileList);
@@ -77,6 +94,11 @@ const ManageAudio = () => {
         toast.error("Please input text or upload a file.");
       }
       // formData.append("text", data?.text);
+      if (data?.image?.[0]) {
+        formData.append("image", data.image?.[0]);
+      } else {
+        formData.append("image", null);
+      }
       formData.append("narrator_voice", data?.narrator_voice);
       formData.append("language_accent", selectedLanguage);
       formData.append("voice_speed", data?.voice_speed);
@@ -93,6 +115,7 @@ const ManageAudio = () => {
           // ).then((res) => {
           //   console.log("res", res);
           // });
+          setVideoUrl(res?.payload?.video_data?.stream_url);
           setisPreview(true);
         }
       });
@@ -116,6 +139,11 @@ const ManageAudio = () => {
       } else {
         toast.error("Please input text or upload a file.");
       }
+      if (data?.image?.[0]) {
+        formData.append("image", data.image?.[0]);
+      } else {
+        formData.append("image", null);
+      }
       formData.append("language_accent", selectedLanguage);
       formData.append("voice_speed", data?.voice_speed);
       formData.append("width", 1280);
@@ -131,10 +159,25 @@ const ManageAudio = () => {
           //   console.log("res", res);
           // });
           setisPreview(true);
+          setVideoUrl(res?.payload?.video_data?.stream_url);
         }
       });
     }
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const video = playerRef.current?.getInternalPlayer?.();
+      if (video && Hls.isSupported() && videoUrl?.endsWith(".m3u8")) {
+        const hls = new Hls();
+        hls.loadSource(videoUrl);
+        hls.attachMedia(video);
+        clearInterval(interval);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [videoUrl]);
 
   return (
     <div>
@@ -173,7 +216,12 @@ const ManageAudio = () => {
             <>
               <div>
                 <Button
-                  onClick={() => setisPreview(false)}
+                  onClick={() => {
+                    setisPreview(false),
+                      reset(),
+                      setUploadedFileName(""),
+                      setUploadedFileName("");
+                  }}
                   className="bg-[#52b69a] hover:bg-black px-4 py-1 text-white text-base font-semibold flex justify-center items-center rounded-md mb-2"
                 >
                   Add new Video
@@ -190,12 +238,12 @@ const ManageAudio = () => {
                 </h3>
                 <div className="rounded-xl overflow-hidden">
                   {/* <img src={videoFrameNew} alt="videoFrameNew" /> */}
-                  {narateAudioData?.video_data?.video_path ? (
+                  {videoUrl ? (
                     <ReactPlayer
                       className="w-full h-[260px] lg:h-[500px]"
-                      // ref={playerRef}
-                      // url={generatedVideo?.video_path}
-                      url={narateAudioData?.video_data?.video_path}
+                      ref={playerRef}
+                      //url={narateAudioData?.video_data?.video_path}
+                      url={videoUrl}
                       width="100%"
                       controls={true} // Show player controls
                       playing={true}
@@ -336,28 +384,68 @@ const ManageAudio = () => {
                   <div className="w-6/12">
                     <div className="mb-4">
                       <div className="mb-2 block">
-                        <Label htmlFor="comment">
-                          Upload Background Image or Video
-                        </Label>
+                        <Label htmlFor="comment">Upload Background Image</Label>
                       </div>
                       <div className="flex w-full items-center justify-center">
                         <Label
-                          htmlFor="dropzone-file"
+                          htmlFor="upload-file"
                           className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                         >
                           <div className="flex flex-col items-center justify-center pb-6 pt-5">
-                            <AiOutlineCloudUpload className="text-[#52B69A] text-6xl mb-4" />
-                            <p className="mb-2 text-[18px] text-[#52B69A] dark:text-gray-400">
-                              <span className="font-semibold text-black">
-                                Drag and drop your image or video file here or
-                              </span>{" "}
-                              Browse
-                            </p>
-                            <p className="text-sm text-[#676767] dark:text-gray-400">
-                              Supported formats: JPG, PNG, MP4
-                            </p>
+                            {uploadedImageFileName ? (
+                              <p className="mt-2 text-sm text-gray-600">
+                                Uploaded File:{" "}
+                                <span className="font-medium">
+                                  {uploadedImageFileName}
+                                </span>
+                              </p>
+                            ) : (
+                              <>
+                                <AiOutlineCloudUpload className="text-[#52B69A] text-6xl mb-4" />
+                                <p className="mb-2 text-[18px] text-[#52B69A] dark:text-gray-400">
+                                  <span className="font-semibold text-black">
+                                    Drag and drop your image file here or
+                                  </span>{" "}
+                                  Browse
+                                </p>
+                                <p className="text-sm text-[#676767] dark:text-gray-400">
+                                  Supported formats: JPG, PNG
+                                </p>
+                              </>
+                            )}
                           </div>
-                          <FileInput id="dropzone-file" className="hidden" />
+                          {/* <FileInput
+                            id="upload-file"
+                            accept=".jpg,.png"
+                            className="hidden"
+                            {...register("image")}
+                           
+                          /> */}
+
+                          <Controller
+                            name="image"
+                            control={control}
+                            defaultValue={null}
+                            render={({ field }) => (
+                              <FileInput
+                                id="upload-file"
+                                accept=".jpg,.png"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const selectedImage = e.target.files?.[0];
+                                  if (selectedImage) {
+                                    setUploadedImageFileName(
+                                      selectedImage.name
+                                    );
+                                    field.onChange(e.target.files); // ✅ forward FileList to react-hook-form
+                                  } else {
+                                    setUploadedImageFileName("");
+                                    field.onChange(null);
+                                  }
+                                }}
+                              />
+                            )}
+                          />
                         </Label>
                       </div>
                     </div>
@@ -378,6 +466,7 @@ const ManageAudio = () => {
                         <option value="character">Character</option>
                       </Select>
                     </div>
+
                     <div className="flex gap-4 mb-4">
                       <div className="w-6/12">
                         {isNarrator == "narator" && (
@@ -426,6 +515,48 @@ const ManageAudio = () => {
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <div className="w-full mb-4">
+                      <div className="mb-2 block">
+                        <Label htmlFor="countries">Select Zone</Label>
+                      </div>
+                      <Select
+                        id="countries"
+                        // onChange={(e) => {
+                        //   handleChangeCharater(e);
+                        // }}
+                      >
+                        <option>Choose...</option>
+                        {allZone?.result?.map((zones) => {
+                          return (
+                            <>
+                              <option value={zones?.id}>{zones?.zone}</option>
+                            </>
+                          );
+                        })}
+                      </Select>
+                    </div>
+                    <div className="w-full mb-4">
+                      <div className="mb-2 block">
+                        <Label htmlFor="countries">Select Category</Label>
+                      </div>
+                      <Select
+                        id="countries"
+                        // onChange={(e) => {
+                        //   handleChangeCharater(e);
+                        // }}
+                      >
+                        <option>Choose...</option>
+                        {cateGory?.result?.map((categ) => {
+                          return (
+                            <>
+                              <option value={categ?.id}>
+                                {categ?.category}
+                              </option>
+                            </>
+                          );
+                        })}
+                      </Select>
                     </div>
                     <div className="w-6/12">
                       <div className="mb-2 block">

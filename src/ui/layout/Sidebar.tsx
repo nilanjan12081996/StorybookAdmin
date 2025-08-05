@@ -13,6 +13,7 @@ import { SiLevelsdotfyi } from "react-icons/si";
 import { RiSoundModuleFill } from 'react-icons/ri';
 import { GiFireZone } from "react-icons/gi";
 import { CiShoppingTag } from 'react-icons/ci';
+import { LuFileAudio } from "react-icons/lu";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -236,6 +237,25 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <MdOutlineAudiotrack className='text-xl' />
                       Manage Audio
+                    </>
+                  }
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/audio-list"
+                  className={`group relative flex items-center gap-2 rounded-sm px-4 py-2 ${sidebarOpen ? 'justify-center' : 'justify-start'} font-normal text-sm text-gray-600 duration-300 ease-in-out hover:bg-graydark mb-2 ${pathname.includes('audio-list') &&
+                    'bg-graydark dark:bg-meta-4'
+                    }`}
+                >
+                  {sidebarOpen ?
+                    <>
+                      <LuFileAudio className='text-xl' />
+                    </>
+                    :
+                    <>
+                      <LuFileAudio className='text-xl' />
+                       Audio list
                     </>
                   }
                 </NavLink>

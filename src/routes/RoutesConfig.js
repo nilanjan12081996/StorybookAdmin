@@ -29,6 +29,7 @@ import ManageCategory from '../pages/ManageCategory/ManageCategory.jsx';
 import ManageCateDes from '../pages/ManageCategoryDes/ManageCateDes.jsx';
 import ManageTag from '../pages/ManageTag/ManageTag.jsx';
 import ManageAudio from '../pages/manageAudio/manageAudio.jsx';
+import AudioList from '../pages/ManageAudio/AudioList.jsx';
 
 
 const allRoutes = [
@@ -133,6 +134,17 @@ const allRoutes = [
       {
         index: true,
         element: <ManageAudio />,
+      },
+    ],
+  },
+
+  {
+    path: '/audio-list',
+    element: <InsideLayout />,
+    children: [
+      {
+        index: true,
+        element: <AudioList />,
       },
     ],
   },
