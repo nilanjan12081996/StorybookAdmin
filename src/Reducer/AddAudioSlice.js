@@ -65,6 +65,38 @@ export const getVoice = createAsyncThunk(
         }
     }
 )
+
+export const getVideo = createAsyncThunk(
+    'getVideo',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await api.get(`/admin/audiobook/list`);
+            if (response?.data?.status_code === 200) {
+                return response?.data;
+            } else {
+                return rejectWithValue(response);
+            }
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+)
+
+export const createVideo = createAsyncThunk(
+    'createVideo',
+    async (user_input, { rejectWithValue }) => {
+        try {
+            const response = await api.post(`/admin/audiobook/create`, user_input);
+            if (response?.data?.status_code === 200) {
+                return response?.data;
+            } else {
+                return rejectWithValue(response);
+            }
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+)
 const initialState = {
     videoGenerateLoading: false,
     loading: false,
@@ -72,7 +104,9 @@ const initialState = {
     charAudioData: [],
     finalData: [],
     error: false,
-    voice: []
+    voice: [],
+    videoList: [],
+    createVidoData: {}
 }
 const AddAudioSlice = createSlice(
     {
@@ -126,6 +160,30 @@ const AddAudioSlice = createSlice(
                     state.error = false
                 })
                 .addCase(getVoice.rejected, (state, { payload }) => {
+                    state.loading = false
+                    state.error = payload
+                })
+                .addCase(getVideo.pending, (state) => {
+                    state.loading = true
+                })
+                .addCase(getVideo.fulfilled, (state, { payload }) => {
+                    state.loading = false
+                    state.videoList = payload
+                    state.error = false
+                })
+                .addCase(getVideo.rejected, (state, { payload }) => {
+                    state.loading = false
+                    state.error = payload
+                })
+                .addCase(createVideo.pending, (state) => {
+                    state.loading = true
+                })
+                .addCase(createVideo.fulfilled, (state, { payload }) => {
+                    state.loading = false
+                    state.createVidoData = payload
+                    state.error = false
+                })
+                .addCase(createVideo.rejected, (state, { payload }) => {
                     state.loading = false
                     state.error = payload
                 })

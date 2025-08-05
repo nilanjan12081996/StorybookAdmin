@@ -16,6 +16,7 @@ import {
   createAudioForCharater,
   createAudioForFinal,
   createAudioForNarator,
+  createVideo,
   getVoice,
 } from "../../Reducer/AddAudioSlice";
 import { useSelector } from "react-redux";
@@ -117,6 +118,18 @@ const ManageAudio = () => {
           // });
           setVideoUrl(res?.payload?.video_data?.stream_url);
           setisPreview(true);
+          dispatch(
+            createVideo({
+              zone_id: data?.zone_id,
+              category_id: data?.category_id,
+              voice_id: 1,
+              story_name: "test",
+              story_avatar: res?.payload?.video_data?.thumbnail,
+              story_description: "test",
+              story_durattion: 3600,
+              story_link: res?.payload?.video_data?.video_path,
+            })
+          );
         }
       });
     } else if (isNarrator === "character") {
@@ -160,6 +173,18 @@ const ManageAudio = () => {
           // });
           setisPreview(true);
           setVideoUrl(res?.payload?.video_data?.stream_url);
+          dispatch(
+            createVideo({
+              zone_id: data?.zone_id,
+              category_id: data?.category_id,
+              voice_id: 1,
+              story_name: "test",
+              story_avatar: res?.payload?.video_data?.thumbnail,
+              story_description: "test",
+              story_durattion: 3600,
+              story_link: res?.payload?.video_data?.video_path,
+            })
+          );
         }
       });
     }
@@ -525,6 +550,7 @@ const ManageAudio = () => {
                         // onChange={(e) => {
                         //   handleChangeCharater(e);
                         // }}
+                        {...register("zone_id")}
                       >
                         <option>Choose...</option>
                         {allZone?.result?.map((zones) => {
@@ -545,6 +571,7 @@ const ManageAudio = () => {
                         // onChange={(e) => {
                         //   handleChangeCharater(e);
                         // }}
+                        {...register("category_id")}
                       >
                         <option>Choose...</option>
                         {cateGory?.result?.map((categ) => {
