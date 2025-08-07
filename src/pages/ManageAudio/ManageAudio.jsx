@@ -155,9 +155,9 @@ const ManageAudio = () => {
         toast.error("Please input text or upload a file.");
       }
       if (data?.image?.[0]) {
-        formData.append("image_url", data.image?.[0]);
+        formData.append("image", data.image?.[0]);
       } else {
-        formData.append("image_url", null);
+        formData.append("image", null);
       }
       formData.append("language_accent", selectedLanguage);
       formData.append("voice_speed", data?.voice_speed);
@@ -250,7 +250,7 @@ const ManageAudio = () => {
                       setUploadedFileName(""),
                       setUploadedFileName("");
                   }}
-                  className="bg-[#52b69a] hover:bg-black px-4 py-1 text-white text-base font-semibold flex justify-center items-center rounded-md mb-2"
+                  className="bg-[#c291ff] hover:bg-black px-4 py-1 text-white text-base font-semibold flex justify-center items-center rounded-md mb-2"
                 >
                   Add new Video
                 </Button>
