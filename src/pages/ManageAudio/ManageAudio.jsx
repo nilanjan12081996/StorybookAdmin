@@ -41,6 +41,7 @@ const ManageAudio = () => {
   const [videoUrl, setVideoUrl] = useState();
   const playerRef = useRef(null);
   const [uploadedImageFileName, setUploadedImageFileName] = useState("");
+  const [isSubtitleEnabled, setIsSubtitleEnabled] = useState(false);
   const handleSelectLanguage = (event) => {
     setSelectedLanguage(event.target.value);
   };
@@ -105,6 +106,7 @@ const ManageAudio = () => {
       formData.append("voice_speed", data?.voice_speed);
       formData.append("width", 1280);
       formData.append("height", 720);
+      formData.append("subtitle", JSON.stringify(isSubtitleEnabled));
       dispatch(createAudioForNarator(formData)).then((res) => {
         console.log("res", res);
         if (res?.payload?.status_code === 200) {
@@ -153,14 +155,15 @@ const ManageAudio = () => {
         toast.error("Please input text or upload a file.");
       }
       if (data?.image?.[0]) {
-        formData.append("image", data.image?.[0]);
+        formData.append("image_url", data.image?.[0]);
       } else {
-        formData.append("image", null);
+        formData.append("image_url", null);
       }
       formData.append("language_accent", selectedLanguage);
       formData.append("voice_speed", data?.voice_speed);
       formData.append("width", 1280);
       formData.append("height", 720);
+      formData.append("subtitle", JSON.stringify(isSubtitleEnabled));
       dispatch(createAudioForCharater(formData)).then((res) => {
         if (res?.payload?.status_code === 200) {
           // dispatch(
@@ -615,7 +618,14 @@ const ManageAudio = () => {
                           </div>
                           <div className="toggle_wrap border border-[#d1d5db] flex justify-between items-center px-4 py-2.5 rounded-md">
                             <p>Subtitle Off</p>
-                            <input type="checkbox" id="switch" />
+                            <input
+                              type="checkbox"
+                              id="switch"
+                              checked={isSubtitleEnabled}
+                              onChange={(e) =>
+                                setIsSubtitleEnabled(e.target.checked)
+                              }
+                            />
                             <label for="switch">Toggle</label>
                           </div>
                         </div>
