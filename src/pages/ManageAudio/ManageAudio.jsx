@@ -103,7 +103,7 @@ const ManageAudio = () => {
       }
       formData.append("narrator_voice", data?.narrator_voice);
       formData.append("language_accent", selectedLanguage);
-      formData.append("voice_speed", data?.voice_speed);
+      // formData.append("voice_speed", data?.voice_speed);
       formData.append("width", 1280);
       formData.append("height", 720);
       formData.append("subtitle", JSON.stringify(isSubtitleEnabled));
@@ -160,7 +160,7 @@ const ManageAudio = () => {
         formData.append("image", null);
       }
       formData.append("language_accent", selectedLanguage);
-      formData.append("voice_speed", data?.voice_speed);
+      // formData.append("voice_speed", data?.voice_speed);
       formData.append("width", 1280);
       formData.append("height", 720);
       formData.append("subtitle", JSON.stringify(isSubtitleEnabled));
@@ -304,7 +304,7 @@ const ManageAudio = () => {
                       </div>
                       <Textarea
                         id="comment"
-                        placeholder="Leave a comment..."
+                        placeholder="Enter Your Audio text..."
                         rows={12}
                         {...register("text")}
                         disabled={inputType === "file"}
@@ -348,7 +348,7 @@ const ManageAudio = () => {
                                   Browse
                                 </p>
                                 <p className="text-sm text-[#676767] dark:text-gray-400">
-                                  Supported formats: PDF, DOC, DOCX
+                                  Supported formats: PDF
                                 </p>
                               </>
                             )}
@@ -377,7 +377,7 @@ const ManageAudio = () => {
                             render={({ field }) => (
                               <FileInput
                                 id="dropzone-file"
-                                accept=".pdf,.doc,.docx"
+                                accept=".pdf"
                                 disabled={inputType === "text"}
                                 className={`hidden ${
                                   inputType === "text"
@@ -526,7 +526,7 @@ const ManageAudio = () => {
                         )}
                       </div>
 
-                      <div className="w-6/12">
+                      {/* <div className="w-6/12">
                         <div className="w-full">
                           <div className="mb-2 block">
                             <Label htmlFor="countries">Voice Speed</Label>
@@ -542,7 +542,7 @@ const ManageAudio = () => {
                             />
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="w-full mb-4">
                       <div className="mb-2 block">
