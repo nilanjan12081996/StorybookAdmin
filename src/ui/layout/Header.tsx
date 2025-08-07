@@ -29,7 +29,7 @@ function Header(props: {
                     e.stopPropagation();
                     props.setSidebarOpen(!props.sidebarOpen);
                     }}
-                    className="z-99999 block rounded-lg bg-[#52B69A] p-1 absolute top-[28px] left-[-60px]"
+                    className="z-99999 block rounded-lg bg-[#c291ff] p-1 absolute top-[28px] left-[-60px]"
                 >
                     <IoMdArrowForward className='text-xl text-white hover:text-black' />
                 </button>
@@ -63,7 +63,7 @@ function Header(props: {
                         e.stopPropagation();
                         props.setSidebarOpen(!props.sidebarOpen);
                         }}
-                        className="z-99999 block rounded-lg bg-[#52B69A] p-1 absolute top-[28px] left-[-60px]"
+                        className="z-99999 block rounded-lg bg-[#c291ff] p-1 absolute top-[28px] left-[-60px]"
                     >
                         <IoMdArrowBack className='text-xl text-white hover:text-black' />
                     </button>

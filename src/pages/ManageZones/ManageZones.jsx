@@ -72,7 +72,7 @@ const ManageZones = () => {
                 onChange={() => handleStatusChange(params.data.id, isChecked)}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer dark:bg-gray-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500 relative"></div>
+              <div className="w-11 h-6 mt-1.5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer dark:bg-gray-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#dabcff] relative"></div>
             </label>
           );
         },
@@ -86,13 +86,13 @@ const ManageZones = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => handleUpdateZone(params?.data?.id)}
-                className="bg-[#52b69a] hover:bg-black px-4 py-1 text-white text-base font-semibold flex justify-center items-center rounded-md"
+                className="bg-[#c291ff] hover:bg-black px-4 py-1 mt-1.5 text-white text-sm font-semibold flex justify-center items-center rounded-md"
               >
                 Update
               </button>
               <button
                 onClick={() => handleAddCategory(params?.data?.id)}
-                className="bg-[#2868c2] hover:bg-black px-4 py-1 text-white text-base font-semibold flex justify-center items-center rounded-md"
+                className="bg-[#3b3b3b] hover:bg-black px-4 py-1 mt-1.5 text-white text-sm font-semibold flex justify-center items-center rounded-md"
               >
                 Add Category
               </button>
@@ -131,7 +131,7 @@ const ManageZones = () => {
             <h2 className="text-2xl font-semibold">Zone Details</h2>
             <Button
               onClick={() => setOpenModal(true)}
-              className="bg-[#52b69a] hover:bg-black px-4 py-1 text-white text-base font-semibold flex justify-center items-center rounded-md"
+              className="bg-[#c291ff] hover:bg-black px-4 py-1 text-white text-base font-semibold flex justify-center items-center rounded-md"
             >
               Add Zone
             </Button>

@@ -71,7 +71,7 @@ const ManageCategory = () => {
                 onChange={() => handleStatusChange(params.data.id, isChecked)}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer dark:bg-gray-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500 relative"></div>
+              <div className="mt-1.5 w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer dark:bg-gray-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#dabcff] relative"></div>
             </label>
           );
         },
@@ -84,12 +84,12 @@ const ManageCategory = () => {
             <div>
               <Button
                 onClick={() => handleBatchDetails(params?.data?.id)}
-                className="border text-[#52b69a] border-[#52b69a] bg-white hover:bg-[#52b69a] hover:text-white text-sm px-4 py-1"
+                className="mt-1 border text-[#c291ff] border-[#c291ff] bg-white hover:bg-[#c291ff] hover:text-white text-sm px-4 py-0"
               >
                 Update
               </Button>
             </div>
-            <div>
+            <div className="mt-1">
               <button
                 type="button"
                 onClick={() => handleDeleteCate(params?.data?.id)}
@@ -106,7 +106,7 @@ const ManageCategory = () => {
         cellRenderer: (params) => (
           <Button
             onClick={() => handleAddDetails(params?.data?.id)}
-            className="border text-[#52b69a] border-[#52b69a] bg-white hover:bg-[#52b69a] hover:text-white text-sm px-4 py-1"
+            className="mt-1 border text-[#c291ff] border-[#c291ff] bg-white hover:bg-[#c291ff] hover:text-white text-sm px-4 py-0"
           >
             Add Description
           </Button>
@@ -118,7 +118,7 @@ const ManageCategory = () => {
         cellRenderer: (params) => (
           <Button
             onClick={() => handleShowDetails(params?.data?.id)}
-            className="border text-[#52b69a] border-[#52b69a] bg-white hover:bg-[#52b69a] hover:text-white text-sm px-4 py-1"
+            className="mt-1 border text-[#c291ff] border-[#c291ff] bg-white hover:bg-[#c291ff] hover:text-white text-sm px-4 py-0"
           >
             Show Description
           </Button>

@@ -239,7 +239,7 @@ const ManageAudio = () => {
         </>
       )}
       <div className="wrapper_area my-0 mx-auto p-6 rounded-xl bg-white">
-        <div className="h-full lg:h-screen">
+        <div className="h-full">
           {isPreview && (
             <>
               <div>
@@ -340,8 +340,8 @@ const ManageAudio = () => {
                               </p>
                             ) : (
                               <>
-                                <AiOutlineCloudUpload className="text-[#52B69A] text-6xl mb-4" />
-                                <p className="mb-2 text-[18px] text-[#52B69A] dark:text-gray-400">
+                                <AiOutlineCloudUpload className="text-[#c291ff] text-6xl mb-4" />
+                                <p className="mb-2 text-[18px] text-[#c291ff] dark:text-gray-400">
                                   <span className="font-semibold text-black">
                                     Drag & drop files or
                                   </span>{" "}
@@ -429,8 +429,8 @@ const ManageAudio = () => {
                               </p>
                             ) : (
                               <>
-                                <AiOutlineCloudUpload className="text-[#52B69A] text-6xl mb-4" />
-                                <p className="mb-2 text-[18px] text-[#52B69A] dark:text-gray-400">
+                                <AiOutlineCloudUpload className="text-[#c291ff] text-6xl mb-4" />
+                                <p className="mb-2 text-[18px] text-[#c291ff] dark:text-gray-400">
                                   <span className="font-semibold text-black">
                                     Drag and drop your image file here or
                                   </span>{" "}
@@ -640,7 +640,7 @@ const ManageAudio = () => {
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-[#52b69a] hover:bg-black px-4 py-1 text-white text-base font-semibold flex justify-center items-center rounded-md"
+                    className="bg-[#c291ff] hover:bg-black px-4 py-1 text-white text-base font-semibold flex justify-center items-center rounded-md"
                   >
                     Add Story
                   </Button>

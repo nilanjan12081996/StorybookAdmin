@@ -37,9 +37,13 @@ const AudioList = () => {
                       }}
                     >
                       <div className="h-full bg-[#FFFFFF] p-2 rounded-2xl overflow-hidden flex justify-center items-center mb-4">
-                        <div className="item_box">
-                          <div className="item_box_play">
-                            <FaCirclePlay className="text-[#3e57da] text-4xl lg:text-7xl" />
+                        <div className="item_box relative">
+                          <div className="absolute w-full h-full">
+                            <div className="flex justify-center items-center h-full">
+                              <div className="item_box_play">
+                                <FaCirclePlay className="text-[#3e57da] text-4xl lg:text-5xl" />
+                              </div>
+                            </div>
                           </div>
                           <img
                             src={lists?.story_avatar}
@@ -51,10 +55,10 @@ const AudioList = () => {
                     </button>
                     <div>
                       <div className="min-h-[70px]">
-                        <p className="text-[#303030] text-base font-medium pb-2">
+                        <p className="text-[#303030] text-[18px] font-semibold pb-1">
                           {lists?.story_name}
                         </p>
-                        <p className="text-[#303030] text-base font-medium pb-2">
+                        <p className="text-[#646363] text-sm font-medium pb-2">
                           {lists?.story_description}
                         </p>
                       </div>

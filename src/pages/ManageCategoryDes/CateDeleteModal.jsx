@@ -39,7 +39,12 @@ const CateDeleteModal = ({
               </Button>
             </div>
             <div>
-              <Button onClick={handleYesM} color="success" type="button">
+              <Button
+                className="bg-[#c291ff] hover:bg-[#454545] px-3 py-0.5 mt-1.5 text-white text-sm font-semibold flex justify-center items-center rounded-md"
+                onClick={handleYesM}
+                color="success"
+                type="button"
+              >
                 Yes
               </Button>
             </div>

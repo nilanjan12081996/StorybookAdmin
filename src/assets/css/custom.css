@@ -66,8 +66,12 @@ input {
   text-overflow: ellipsis;
 }
 .cnl_btn {
-  background-color: red;
+  background-color: #454545;
   color: white;
+  margin-top: 5px;
+}
+.cnl_btn:hover {
+  background-color: #575757;
 }
 /* calender Css new ADD */
 
@@ -186,7 +190,7 @@ input {
   line-height: 30px;
   font-weight: 500;
   color: #ffffff;
-  background: #52b69a;
+  background: #c291ff;
   border-radius: 12px;
 }
 
@@ -1122,7 +1126,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .toggle_wrap input:checked+label {
-  background: #52b69a;
+  background: #c291ff;
 }
 
 .toggle_wrap input:checked+label:after {

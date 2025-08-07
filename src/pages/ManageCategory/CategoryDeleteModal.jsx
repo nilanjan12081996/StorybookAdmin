@@ -35,7 +35,12 @@ const CategoryDeleteModal = ({
               </Button>
             </div>
             <div>
-              <Button onClick={handleYesCate} color="success" type="button">
+              <Button
+                className="bg-[#c291ff] hover:bg-[#454545] px-3 py-0.5 mt-1.5 text-white text-sm font-semibold flex justify-center items-center rounded-md"
+                onClick={handleYesCate}
+                color="success"
+                type="button"
+              >
                 Yes
               </Button>
             </div>

@@ -76,7 +76,11 @@ const UpdateModal = ({ openDesModal, setOpenDesModal, desId, cateId }) => {
             <Button className="cnl_btn" onClick={() => setOpenDesModal(false)}>
               Cancel
             </Button>
-            <Button color="success" type="submit">
+            <Button
+              className="bg-[#c291ff] hover:bg-[#454545] px-3 py-0.5 mt-1.5 text-white text-sm font-semibold flex justify-center items-center rounded-md"
+              color="success"
+              type="submit"
+            >
               Update
             </Button>
           </Modal.Footer>
